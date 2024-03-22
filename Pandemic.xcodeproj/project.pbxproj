@@ -12,6 +12,7 @@
 		84A848692BAD526700867F78 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A848682BAD526700867F78 /* ViewController.swift */; };
 		84A8486E2BAD526900867F78 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84A8486D2BAD526900867F78 /* Assets.xcassets */; };
 		84A848712BAD526900867F78 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84A8486F2BAD526900867F78 /* LaunchScreen.storyboard */; };
+		84A848792BAD685000867F78 /* ModulationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A848782BAD685000867F78 /* ModulationViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		84A8486D2BAD526900867F78 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		84A848702BAD526900867F78 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		84A848722BAD526900867F78 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		84A848782BAD685000867F78 /* ModulationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModulationViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +59,7 @@
 				84A848642BAD526700867F78 /* AppDelegate.swift */,
 				84A848662BAD526700867F78 /* SceneDelegate.swift */,
 				84A848682BAD526700867F78 /* ViewController.swift */,
+				84A848782BAD685000867F78 /* ModulationViewController.swift */,
 				84A8486D2BAD526900867F78 /* Assets.xcassets */,
 				84A8486F2BAD526900867F78 /* LaunchScreen.storyboard */,
 				84A848722BAD526900867F78 /* Info.plist */,
@@ -134,6 +137,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84A848792BAD685000867F78 /* ModulationViewController.swift in Sources */,
 				84A848692BAD526700867F78 /* ViewController.swift in Sources */,
 				84A848652BAD526700867F78 /* AppDelegate.swift in Sources */,
 				84A848672BAD526700867F78 /* SceneDelegate.swift in Sources */,

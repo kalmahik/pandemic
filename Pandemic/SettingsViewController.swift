@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  SettingsViewController.swift
 //  Pandemic
 //
 //  Created by kalmahik on 22.03.2024.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class SettingsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -17,7 +17,6 @@ class ViewController: UIViewController {
     
     private let rootStack: UIStackView =  {
         let rootStack: UIStackView = UIStackView()
-        rootStack.translatesAutoresizingMaskIntoConstraints = false
         rootStack.axis = NSLayoutConstraint.Axis.vertical
         rootStack.distribution = UIStackView.Distribution.fill
         rootStack.alignment = UIStackView.Alignment.leading
@@ -36,7 +35,7 @@ class ViewController: UIViewController {
         textField.borderStyle = .roundedRect
         textField.keyboardType = .numberPad
         textField.placeholder = "Amount of population, more than 1"
-        textField.text = "100"
+        textField.text = "\(Config.defaultConfig.groupSize)"
         return textField
     }()
     
@@ -51,7 +50,7 @@ class ViewController: UIViewController {
         textField.borderStyle = .roundedRect
         textField.keyboardType = .numberPad
         textField.placeholder = "From 1 to 8"
-        textField.text = "4"
+        textField.text = "\(Config.defaultConfig.infectionFactor)"
         return textField
     }()
     
@@ -66,11 +65,11 @@ class ViewController: UIViewController {
         textField.borderStyle = .roundedRect
         textField.keyboardType = .numberPad
         textField.placeholder = "In seconds, more than 1"
-        textField.text = "1"
+        textField.text = "\(Config.defaultConfig.refrashRate)"
         return textField
     }()
     
-    private lazy var loginButton: UIButton = {
+    private lazy var runButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = .red
         button.setTitle("Запустить моделирование", for: .normal)
@@ -80,24 +79,34 @@ class ViewController: UIViewController {
     }()
     
     @objc private func didTapRunButton() {
-        let modulationViewController = ModulationViewController()
+        let config = getConfig()
+        let modulationViewController = ModulationViewController(config: config)
         navigationController?.pushViewController(modulationViewController, animated: true)
+    }
+    
+    private func getConfig() -> Config {
+        return Config(
+            groupSize: Int(groupSizeTextField.text ?? "\(Config.defaultConfig.groupSize)") ?? Config.defaultConfig.groupSize,
+            infectionFactor: Int(infectionFactorTextField.text ?? "\(Config.defaultConfig.infectionFactor)") ?? Config.defaultConfig.infectionFactor,
+            refrashRate: Int(refreshRateTextField.text ?? "\(Config.defaultConfig.refrashRate)") ?? Config.defaultConfig.refrashRate
+        )
     }
 }
 
-extension ViewController {
-    private func addSubViews() {
-        [groupSizeLabel,
-         groupSizeTextField,
-         infectionFactorLabel,
-         infectionFactorTextField,
-         refreshRateLabel,
-         refreshRateTextField,
-         loginButton
-        ].forEach {
-            $0.translatesAutoresizingMaskIntoConstraints = false
-            rootStack.addArrangedSubview($0)
-        }
+extension SettingsViewController {
+    private func addSubViews() {[
+        groupSizeLabel,
+        groupSizeTextField,
+        infectionFactorLabel,
+        infectionFactorTextField,
+        refreshRateLabel,
+        refreshRateTextField,
+        runButton
+    ].forEach {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        rootStack.translatesAutoresizingMaskIntoConstraints = false
+        rootStack.addArrangedSubview($0)
+    }
         view.addSubview(rootStack)
         view.backgroundColor = .white
     }
@@ -117,8 +126,8 @@ extension ViewController {
             refreshRateTextField.leadingAnchor.constraint(equalTo: rootStack.leadingAnchor),
             refreshRateTextField.trailingAnchor.constraint(equalTo: rootStack.trailingAnchor),
             
-            loginButton.leadingAnchor.constraint(equalTo: rootStack.leadingAnchor),
-            loginButton.trailingAnchor.constraint(equalTo: rootStack.trailingAnchor)
+            runButton.leadingAnchor.constraint(equalTo: rootStack.leadingAnchor),
+            runButton.trailingAnchor.constraint(equalTo: rootStack.trailingAnchor)
         ])
     }
 }

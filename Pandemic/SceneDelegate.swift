@@ -50,8 +50,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     private func configureRootController(_ scene: UIScene) {
         if let windowScene = scene as? UIWindowScene {
+            let settingsViewController = SettingsViewController()
+            let app = UINavigationController(rootViewController: settingsViewController)
             window = UIWindow(windowScene: windowScene)
-            window?.rootViewController = ViewController()
+            window?.rootViewController = app
             window?.makeKeyAndVisible()
         }
     }

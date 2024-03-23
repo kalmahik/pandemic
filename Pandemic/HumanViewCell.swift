@@ -23,7 +23,8 @@ final class HumanViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configCell(_ human: Human, index: Int) {
+    func configCell(_ human: Human, index: Int, size: Int) {
+        humanTextLabel.font = UIFont.systemFont(ofSize: CGFloat(size), weight: .regular)
         humanTextLabel.text = human.isSick ? "🤢" : "😀"
     }
     
@@ -37,7 +38,6 @@ final class HumanViewCell: UICollectionViewCell {
 extension HumanViewCell {
     private func setupViews() {
         contentView.addSubview(humanTextLabel)
-        backgroundColor = UIColor.blue
     }
     
     private func applyConstraints() {

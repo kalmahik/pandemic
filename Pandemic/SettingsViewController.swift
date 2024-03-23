@@ -9,6 +9,8 @@ import UIKit
 
 class SettingsViewController: UIViewController {
     
+    var configHelper = ConfigHelper.shared
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         addSubViews()
@@ -69,6 +71,21 @@ class SettingsViewController: UIViewController {
         return textField
     }()
     
+    private let humanSizeLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Human size"
+        return label
+    }()
+    
+    private let humanSizeTextField: UITextField = {
+        let textField = UITextField()
+        textField.borderStyle = .roundedRect
+        textField.keyboardType = .numberPad
+        textField.placeholder = "In px, 24-96 for ex"
+        textField.text = "\(Config.defaultConfig.humanSize)"
+        return textField
+    }()
+    
     private lazy var runButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = .red
@@ -79,16 +96,17 @@ class SettingsViewController: UIViewController {
     }()
     
     @objc private func didTapRunButton() {
-        let config = getConfig()
-        let modulationViewController = ModulationViewController(config: config)
+        configHelper.updateConfig(config: getConfig())
+        let modulationViewController = ModulationViewController()
         navigationController?.pushViewController(modulationViewController, animated: true)
     }
     
     private func getConfig() -> Config {
         return Config(
-            groupSize: Int(groupSizeTextField.text ?? "\(Config.defaultConfig.groupSize)") ?? Config.defaultConfig.groupSize,
-            infectionFactor: Int(infectionFactorTextField.text ?? "\(Config.defaultConfig.infectionFactor)") ?? Config.defaultConfig.infectionFactor,
-            refrashRate: Int(refreshRateTextField.text ?? "\(Config.defaultConfig.refrashRate)") ?? Config.defaultConfig.refrashRate
+            groupSize: groupSizeTextField.text,
+            infectionFactor: infectionFactorTextField.text,
+            refrashRate: refreshRateTextField.text,
+            humanSize: humanSizeTextField.text
         )
     }
 }
@@ -101,7 +119,9 @@ extension SettingsViewController {
         infectionFactorTextField,
         refreshRateLabel,
         refreshRateTextField,
-        runButton
+        humanSizeLabel,
+        humanSizeTextField,
+        runButton,
     ].forEach {
         $0.translatesAutoresizingMaskIntoConstraints = false
         rootStack.translatesAutoresizingMaskIntoConstraints = false
@@ -124,7 +144,10 @@ extension SettingsViewController {
             infectionFactorTextField.trailingAnchor.constraint(equalTo: rootStack.trailingAnchor),
             
             refreshRateTextField.leadingAnchor.constraint(equalTo: rootStack.leadingAnchor),
-            refreshRateTextField.trailingAnchor.constraint(equalTo: rootStack.trailingAnchor),
+            refreshRateTextField.trailingAnchor.constraint(equalTo: rootStack.trailingAnchor),   
+            
+            humanSizeLabel.leadingAnchor.constraint(equalTo: rootStack.leadingAnchor),
+            humanSizeTextField.trailingAnchor.constraint(equalTo: rootStack.trailingAnchor),
             
             runButton.leadingAnchor.constraint(equalTo: rootStack.leadingAnchor),
             runButton.trailingAnchor.constraint(equalTo: rootStack.trailingAnchor)

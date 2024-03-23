@@ -17,6 +17,7 @@
 		84A8487D2BAE1C3700867F78 /* Human.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A8487C2BAE1C3700867F78 /* Human.swift */; };
 		84BF97282BAE337E00490E25 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BF97272BAE337E00490E25 /* Config.swift */; };
 		84BF972A2BAF336700490E25 /* ModulationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BF97292BAF336700490E25 /* ModulationPresenter.swift */; };
+		84BF972C2BAF63D400490E25 /* ConfigHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BF972B2BAF63D400490E25 /* ConfigHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		84A8487C2BAE1C3700867F78 /* Human.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Human.swift; sourceTree = "<group>"; };
 		84BF97272BAE337E00490E25 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		84BF97292BAF336700490E25 /* ModulationPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModulationPresenter.swift; sourceTree = "<group>"; };
+		84BF972B2BAF63D400490E25 /* ConfigHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +72,7 @@
 				84A8487A2BAE186C00867F78 /* HumanViewCell.swift */,
 				84A8487C2BAE1C3700867F78 /* Human.swift */,
 				84BF97272BAE337E00490E25 /* Config.swift */,
+				84BF972B2BAF63D400490E25 /* ConfigHelper.swift */,
 				84A848782BAD685000867F78 /* ModulationViewController.swift */,
 				84BF97292BAF336700490E25 /* ModulationPresenter.swift */,
 				84A8486D2BAD526900867F78 /* Assets.xcassets */,
@@ -154,6 +157,7 @@
 				84A8487D2BAE1C3700867F78 /* Human.swift in Sources */,
 				84A8487B2BAE186C00867F78 /* HumanViewCell.swift in Sources */,
 				84BF97282BAE337E00490E25 /* Config.swift in Sources */,
+				84BF972C2BAF63D400490E25 /* ConfigHelper.swift in Sources */,
 				84A848692BAD526700867F78 /* SettingsViewController.swift in Sources */,
 				84A848652BAD526700867F78 /* AppDelegate.swift in Sources */,
 				84A848672BAD526700867F78 /* SceneDelegate.swift in Sources */,

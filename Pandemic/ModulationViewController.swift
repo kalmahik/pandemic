@@ -10,14 +10,15 @@ import UIKit
 final class ModulationViewController: UIViewController {
     
     // MARK: - Public Properties
-
+    let configHelper = ConfigHelper.shared
     var presenter: ModulationPresenter?
-
+    var columnCount: Int?
+    
     // MARK: - Init
     
-    init(config: Config) {
+    init() {
         super.init(nibName: nil, bundle: nil)
-        presenter = ModulationPresenter(config: config, view: self)
+        presenter = ModulationPresenter(view: self)
     }
     
     // MARK: - UIViewController
@@ -40,15 +41,13 @@ final class ModulationViewController: UIViewController {
     
     @objc func updateUI(indexPaths: [IndexPath]) {
         self.collectionView.reconfigureItems(at: indexPaths)
-     }
+    }
     
     // MARK: - Private Methods
     
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.itemSize = CGSize(width: 48, height: 48)
-        layout.sectionInset = UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4)
         var collectionView = UICollectionView(frame: view.frame, collectionViewLayout: layout)
         collectionView.dataSource = self
         collectionView.delegate = self
@@ -72,9 +71,36 @@ extension ModulationViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HumanViewCell.identifier, for: indexPath) as! HumanViewCell
         let human = presenter?.getHumans()[indexPath.row]
-        guard let human else { return cell}
-        cell.configCell(human, index: indexPath.row)
+        guard let human else { return cell }
+        cell.configCell(human, index: indexPath.row, size: configHelper.config.humanSize)
         return cell
+    }
+}
+
+extension ModulationViewController: UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let collectionViewWidth = collectionView.frame.width
+        let numberOfColumns = Int(collectionViewWidth / (CGFloat(configHelper.config.humanSize)))
+        let itemWidth = collectionViewWidth / CGFloat(numberOfColumns)
+        columnCount = numberOfColumns
+        return CGSize(width: itemWidth, height: itemWidth)
+    }
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        minimumInteritemSpacingForSectionAt section: Int
+    ) -> CGFloat {
+        return 0
+    }
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        minimumLineSpacingForSectionAt section: Int
+    ) -> CGFloat {
+        return 0
     }
 }
 

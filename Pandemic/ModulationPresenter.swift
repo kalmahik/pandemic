@@ -8,16 +8,15 @@
 import Foundation
 
 final class ModulationPresenter {
-    private var config: Config
+    private var configHelper = ConfigHelper.shared
     private var humans: [Human]
     private var timer: Timer?
     weak var view: ModulationViewController?
     
-    init(config: Config, timer: Timer? = nil, view: ModulationViewController) {
+    init(timer: Timer? = nil, view: ModulationViewController) {
         self.view = view
-        self.config = config
         self.timer = timer
-        self.humans = (0..<config.groupSize).map { Human(isSick: false, index: $0) }
+        self.humans = (0..<configHelper.config.groupSize).map { Human(isSick: false, index: $0) }
     }
     
     func viewDidLoad() {
@@ -45,7 +44,7 @@ final class ModulationPresenter {
     }
     
     private func generateHumans(count: Int) -> [Human] {
-        let humans = (0..<config.groupSize).map { Human(isSick: false, index: $0) }
+        let humans = (0..<configHelper.config.groupSize).map { Human(isSick: false, index: $0) }
         return humans
     }
     
@@ -53,7 +52,7 @@ final class ModulationPresenter {
         if timer == nil {
             print("TIMER STARTED")
             timer = Timer.scheduledTimer(
-                timeInterval: Double(config.refrashRate),
+                timeInterval: Double(configHelper.config.refrashRate),
                 target: self,
                 selector: #selector(calculate),
                 userInfo: nil,
@@ -83,9 +82,9 @@ final class ModulationPresenter {
             var peopleIndexesToUpdate = Set<Int>()
             for infectedHuman in allInfectedPeople {
                 //для каждого инфицированного, мы находим людей кто вокруг
-                let peopleNearby = self.getPeopleNearby(around: infectedHuman, peopleInRow: 12)
+                let peopleNearby = self.getPeopleNearby(around: infectedHuman)
                 //решаем, какое количество человек из этого круга будет заражено
-                let amountPeopleIsUnderRisk = Int.random(in: 1...self.config.infectionFactor)
+                let amountPeopleIsUnderRisk = Int.random(in: 1...self.configHelper.config.infectionFactor)
                 //берем это количество случайных людей
                 let randomPeopleNearby = Array(peopleNearby.shuffled().prefix(amountPeopleIsUnderRisk))
                 //заражаем каждого человека из списка выбранных людей
@@ -110,7 +109,8 @@ final class ModulationPresenter {
         }
     }
 
-    private func getPeopleNearby(around human: Human, peopleInRow: Int) -> [Human] {
+    private func getPeopleNearby(around human: Human) -> [Human] {
+        let peopleInRow = self.view?.columnCount ?? 10
         let index = human.index
         let isLeftEdgeHuman = index % (peopleInRow) == 0
         let isRightEdgeHuman = (index + 1) % peopleInRow == 0

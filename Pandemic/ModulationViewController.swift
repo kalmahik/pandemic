@@ -13,6 +13,7 @@ final class ModulationViewController: UIViewController {
     let configHelper = ConfigHelper.shared
     var presenter: ModulationPresenter?
     var columnCount: Int?
+    var scale: CGFloat = 1.0
     
     // MARK: - Init
     
@@ -25,11 +26,6 @@ final class ModulationViewController: UIViewController {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        presenter?.viewDidLoad()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -69,11 +65,11 @@ extension ModulationViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HumanViewCell.identifier, for: indexPath) as! HumanViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HumanViewCell.identifier, for: indexPath)
         let human = presenter?.getHumans()[indexPath.row]
-        guard let human else { return cell }
-        cell.configCell(human, index: indexPath.row, size: configHelper.config.humanSize)
-        return cell
+        guard let humanCell = cell as? HumanViewCell, let human else { return UICollectionViewCell() }
+        humanCell.configCell(human, index: indexPath.row, size: Constants.humanSize * scale)
+        return humanCell
     }
 }
 
@@ -81,7 +77,7 @@ extension ModulationViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let collectionViewWidth = collectionView.frame.width
-        let numberOfColumns = Int(collectionViewWidth / (CGFloat(configHelper.config.humanSize)))
+        let numberOfColumns = Int(collectionViewWidth / (Constants.humanSize * scale))
         let itemWidth = collectionViewWidth / CGFloat(numberOfColumns)
         columnCount = numberOfColumns
         return CGSize(width: itemWidth, height: itemWidth)
@@ -104,9 +100,42 @@ extension ModulationViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
+extension ModulationViewController: UIGestureRecognizerDelegate {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        presenter?.viewDidLoad()
+        let pinchGesture = UIPinchGestureRecognizer(
+            target: self,
+            action: #selector(handlePinch(_:))
+        )
+        pinchGesture.delegate = self
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.addGestureRecognizer(pinchGesture)
+    }
+    
+    @objc func handlePinch(_ sender: UIPinchGestureRecognizer) {
+        guard sender.view != nil else { return }
+        if sender.state == .began || sender.state == .changed {
+            scale *= sender.scale
+            sender.scale = 1.0
+            collectionView.collectionViewLayout.invalidateLayout()
+            collectionView.reloadData()
+        }
+    }
+    
+    func gestureRecognizer(
+        _ gestureRecognizer: UIGestureRecognizer,
+        shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer
+    ) -> Bool {
+        return true
+    }
+}
+
 extension ModulationViewController {
     func addSubViews() {
         view.addSubview(collectionView)
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
     }
     
     func applyConstraints() {

@@ -28,7 +28,7 @@ class SettingsViewController: UIViewController {
     
     private let groupSizeLabel: UILabel = {
         let label = UILabel()
-        label.text = "Group Size"
+        label.text = TextConstants.groupSizeTitle
         return label
     }()
     
@@ -36,14 +36,14 @@ class SettingsViewController: UIViewController {
         let textField = UITextField()
         textField.borderStyle = .roundedRect
         textField.keyboardType = .numberPad
-        textField.placeholder = "Amount of population, more than 1"
+        textField.placeholder = TextConstants.groupSizeMessage
         textField.text = "\(Config.defaultConfig.groupSize)"
         return textField
     }()
     
     private let infectionFactorLabel: UILabel = {
         let label = UILabel()
-        label.text = "Infection Factor"
+        label.text = TextConstants.infectionFactorTitle
         return label
     }()
     
@@ -51,14 +51,14 @@ class SettingsViewController: UIViewController {
         let textField = UITextField()
         textField.borderStyle = .roundedRect
         textField.keyboardType = .numberPad
-        textField.placeholder = "From 1 to 8"
+        textField.placeholder = TextConstants.infectionFactorMessage
         textField.text = "\(Config.defaultConfig.infectionFactor)"
         return textField
     }()
     
     private let refreshRateLabel: UILabel = {
         let label = UILabel()
-        label.text = "Refresh Rate"
+        label.text = TextConstants.refrashRateTitle
         return label
     }()
     
@@ -66,30 +66,15 @@ class SettingsViewController: UIViewController {
         let textField = UITextField()
         textField.borderStyle = .roundedRect
         textField.keyboardType = .numberPad
-        textField.placeholder = "In seconds, more than 1"
+        textField.placeholder = TextConstants.refrashRateMessage
         textField.text = "\(Config.defaultConfig.refrashRate)"
-        return textField
-    }()
-    
-    private let humanSizeLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Human size"
-        return label
-    }()
-    
-    private let humanSizeTextField: UITextField = {
-        let textField = UITextField()
-        textField.borderStyle = .roundedRect
-        textField.keyboardType = .numberPad
-        textField.placeholder = "In px, 24-96 for ex"
-        textField.text = "\(Config.defaultConfig.humanSize)"
         return textField
     }()
     
     private lazy var runButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = .red
-        button.setTitle("Запустить моделирование", for: .normal)
+        button.setTitle(TextConstants.runModulationButton, for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.addTarget(self, action: #selector(didTapRunButton), for: .touchUpInside)
         return button
@@ -105,8 +90,7 @@ class SettingsViewController: UIViewController {
         return Config(
             groupSize: groupSizeTextField.text,
             infectionFactor: infectionFactorTextField.text,
-            refrashRate: refreshRateTextField.text,
-            humanSize: humanSizeTextField.text
+            refrashRate: refreshRateTextField.text
         )
     }
 }
@@ -119,8 +103,6 @@ extension SettingsViewController {
         infectionFactorTextField,
         refreshRateLabel,
         refreshRateTextField,
-        humanSizeLabel,
-        humanSizeTextField,
         runButton,
     ].forEach {
         $0.translatesAutoresizingMaskIntoConstraints = false
@@ -145,10 +127,7 @@ extension SettingsViewController {
             
             refreshRateTextField.leadingAnchor.constraint(equalTo: rootStack.leadingAnchor),
             refreshRateTextField.trailingAnchor.constraint(equalTo: rootStack.trailingAnchor),   
-            
-            humanSizeLabel.leadingAnchor.constraint(equalTo: rootStack.leadingAnchor),
-            humanSizeTextField.trailingAnchor.constraint(equalTo: rootStack.trailingAnchor),
-            
+                        
             runButton.leadingAnchor.constraint(equalTo: rootStack.leadingAnchor),
             runButton.trailingAnchor.constraint(equalTo: rootStack.trailingAnchor)
         ])

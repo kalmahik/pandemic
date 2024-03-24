@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		84217DF32BB0AC2500061AA3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84217DF22BB0AC2500061AA3 /* Constants.swift */; };
 		84A848652BAD526700867F78 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A848642BAD526700867F78 /* AppDelegate.swift */; };
 		84A848672BAD526700867F78 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A848662BAD526700867F78 /* SceneDelegate.swift */; };
 		84A848692BAD526700867F78 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A848682BAD526700867F78 /* SettingsViewController.swift */; };
@@ -21,6 +22,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		84217DF22BB0AC2500061AA3 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		84A848612BAD526700867F78 /* Pandemic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pandemic.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84A848642BAD526700867F78 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		84A848662BAD526700867F78 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -73,6 +75,7 @@
 				84A8487C2BAE1C3700867F78 /* Human.swift */,
 				84BF97272BAE337E00490E25 /* Config.swift */,
 				84BF972B2BAF63D400490E25 /* ConfigHelper.swift */,
+				84217DF22BB0AC2500061AA3 /* Constants.swift */,
 				84A848782BAD685000867F78 /* ModulationViewController.swift */,
 				84BF97292BAF336700490E25 /* ModulationPresenter.swift */,
 				84A8486D2BAD526900867F78 /* Assets.xcassets */,
@@ -153,6 +156,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				84BF972A2BAF336700490E25 /* ModulationPresenter.swift in Sources */,
+				84217DF32BB0AC2500061AA3 /* Constants.swift in Sources */,
 				84A848792BAD685000867F78 /* ModulationViewController.swift in Sources */,
 				84A8487D2BAE1C3700867F78 /* Human.swift in Sources */,
 				84A8487B2BAE186C00867F78 /* HumanViewCell.swift in Sources */,

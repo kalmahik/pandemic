@@ -28,6 +28,14 @@ final class ModulationViewController: UIViewController {
     
     // MARK: - UIViewController
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        presenter?.viewDidLoad()
+        let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(handlePinch(_:)))
+        pinchGesture.delegate = self
+        collectionView.addGestureRecognizer(pinchGesture)
+    }
+    
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         presenter?.viewDidDisappear()
@@ -109,19 +117,6 @@ extension ModulationViewController: UICollectionViewDelegateFlowLayout {
 }
 
 extension ModulationViewController: UIGestureRecognizerDelegate {
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        presenter?.viewDidLoad()
-        let pinchGesture = UIPinchGestureRecognizer(
-            target: self,
-            action: #selector(handlePinch(_:))
-        )
-        pinchGesture.delegate = self
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        collectionView.addGestureRecognizer(pinchGesture)
-    }
-    
     @objc func handlePinch(_ sender: UIPinchGestureRecognizer) {
         guard sender.view != nil else { return }
         if sender.state == .began || sender.state == .changed {

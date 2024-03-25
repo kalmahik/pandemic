@@ -37,14 +37,14 @@ final class ModulationViewController: UIViewController {
     
     @objc func updateUI(indexPaths: [IndexPath]) {
         collectionView.reconfigureItems(at: indexPaths)
-        header.updateCount(presenter?.getHealthyPeople(), presenter?.getInfectedPeopleCount())
+        header.updateCount(presenter?.getHealthyPeopleCount(), presenter?.getInfectedPeopleCount())
     }
     
     // MARK: - Private Methods
     
     private lazy var header: InformationTable = {
         let header = InformationTable(
-            healthyCount: presenter?.getHealthyPeople(),
+            healthyCount: presenter?.getHealthyPeopleCount(),
             infectedCount: presenter?.getInfectedPeopleCount()
         )
         return header

@@ -14,11 +14,15 @@ final class ModulationPresenter {
     private var timer: Timer?
     weak var view: ModulationViewController?
     
+    //MARK: - Initializers
+    
     init(timer: Timer? = nil, view: ModulationViewController) {
         self.view = view
         self.timer = timer
         self.people = (0..<configHelper.config.groupSize).map { Human(isSick: false, index: $0) }
     }
+    
+    //MARK: - UIViewController
     
     func viewDidLoad() {
         view?.addSubViews()
@@ -28,6 +32,8 @@ final class ModulationPresenter {
     func viewDidDisappear() {
         stopTimer()
     }
+    
+    //MARK: - Public Methods
     
     func didTapHuman(at index: Int) {
         let indexPaths = [index].map {
@@ -44,7 +50,7 @@ final class ModulationPresenter {
         people
     }
     
-    func getHealthyPeople() -> Int {
+    func getHealthyPeopleCount() -> Int {
         people.count - infectedPeople.count
     }
     
@@ -57,6 +63,8 @@ final class ModulationPresenter {
         self.infectedPeople.append(Human(isSick: true, index: index))
     }
     
+    //MARK: - Private Methods
+    
     private func generatePeople(count: Int) -> [Human] {
         let people = (0..<configHelper.config.groupSize).map { Human(isSick: false, index: $0) }
         return people
@@ -65,8 +73,6 @@ final class ModulationPresenter {
     private func startTimer() {
         if timer == nil {
             print("TIMER STARTED")
-//            infectedPeople = []
-            print(infectedPeople.count)
             timer = Timer.scheduledTimer(
                 timeInterval: Double(configHelper.config.refrashRate),
                 target: self,

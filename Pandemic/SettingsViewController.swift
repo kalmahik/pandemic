@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SettingsViewController: UIViewController {
+final class SettingsViewController: UIViewController {
     
     var configHelper = ConfigHelper.shared
     
@@ -32,12 +32,12 @@ class SettingsViewController: UIViewController {
         return label
     }()
     
-    private let groupSizeTextField: UITextField = {
+    private lazy var groupSizeTextField: UITextField = {
         let textField = UITextField()
         textField.borderStyle = .roundedRect
         textField.keyboardType = .numberPad
         textField.placeholder = TextConstants.groupSizeMessage
-        textField.text = "\(Config.defaultConfig.groupSize)"
+        textField.text = "\(configHelper.config.groupSize)"
         return textField
     }()
     
@@ -47,12 +47,12 @@ class SettingsViewController: UIViewController {
         return label
     }()
     
-    private let infectionFactorTextField: UITextField = {
+    private lazy var infectionFactorTextField: UITextField = {
         let textField = UITextField()
         textField.borderStyle = .roundedRect
         textField.keyboardType = .numberPad
         textField.placeholder = TextConstants.infectionFactorMessage
-        textField.text = "\(Config.defaultConfig.infectionFactor)"
+        textField.text = "\(configHelper.config.infectionFactor)"
         return textField
     }()
     
@@ -62,12 +62,12 @@ class SettingsViewController: UIViewController {
         return label
     }()
     
-    private let refreshRateTextField: UITextField = {
+    private lazy var refreshRateTextField: UITextField = {
         let textField = UITextField()
         textField.borderStyle = .roundedRect
         textField.keyboardType = .numberPad
         textField.placeholder = TextConstants.refrashRateMessage
-        textField.text = "\(Config.defaultConfig.refrashRate)"
+        textField.text = "\(configHelper.config.refrashRate)"
         return textField
     }()
     
@@ -96,19 +96,20 @@ class SettingsViewController: UIViewController {
 }
 
 extension SettingsViewController {
-    private func addSubViews() {[
-        groupSizeLabel,
-        groupSizeTextField,
-        infectionFactorLabel,
-        infectionFactorTextField,
-        refreshRateLabel,
-        refreshRateTextField,
-        runButton,
-    ].forEach {
-        $0.translatesAutoresizingMaskIntoConstraints = false
+    private func addSubViews() {
+        [
+            groupSizeLabel,
+            groupSizeTextField,
+            infectionFactorLabel,
+            infectionFactorTextField,
+            refreshRateLabel,
+            refreshRateTextField,
+            runButton,
+        ].forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            rootStack.addArrangedSubview($0)
+        }
         rootStack.translatesAutoresizingMaskIntoConstraints = false
-        rootStack.addArrangedSubview($0)
-    }
         view.addSubview(rootStack)
         view.backgroundColor = .white
     }
@@ -126,10 +127,11 @@ extension SettingsViewController {
             infectionFactorTextField.trailingAnchor.constraint(equalTo: rootStack.trailingAnchor),
             
             refreshRateTextField.leadingAnchor.constraint(equalTo: rootStack.leadingAnchor),
-            refreshRateTextField.trailingAnchor.constraint(equalTo: rootStack.trailingAnchor),   
-                        
+            refreshRateTextField.trailingAnchor.constraint(equalTo: rootStack.trailingAnchor),
+            
             runButton.leadingAnchor.constraint(equalTo: rootStack.leadingAnchor),
-            runButton.trailingAnchor.constraint(equalTo: rootStack.trailingAnchor)
+            runButton.trailingAnchor.constraint(equalTo: rootStack.trailingAnchor),
+            runButton.heightAnchor.constraint(equalToConstant: 48)
         ])
     }
 }

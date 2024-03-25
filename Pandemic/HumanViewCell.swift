@@ -13,6 +13,8 @@ final class HumanViewCell: UICollectionViewCell {
 
     static let identifier = "HumanCollectionViewCell"
     
+    // MARK: - Initializers
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
@@ -23,11 +25,15 @@ final class HumanViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Public Methods
+    
     func configCell(_ human: Human, index: Int, size: CGFloat) {
         humanTextLabel.font = UIFont.systemFont(ofSize: size, weight: .regular)
         humanTextLabel.text = human.isSick ? "🤢" : "😀"
     }
     
+    // MARK: - Private Methods
+
     private lazy var humanTextLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -39,7 +45,6 @@ extension HumanViewCell {
     private func setupViews() {
         contentView.addSubview(humanTextLabel)
         contentView.layer.borderWidth = 1
-        contentView.layer.borderColor = CGColor(red: 99, green: 00, blue: 00, alpha: 1)
     }
     
     private func applyConstraints() {

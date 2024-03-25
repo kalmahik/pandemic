@@ -9,14 +9,15 @@ import Foundation
 
 final class ModulationPresenter {
     private var configHelper = ConfigHelper.shared
-    private var humans: [Human]
+    private var people: [Human]
+    private var infectedPeople: [Human] = []
     private var timer: Timer?
     weak var view: ModulationViewController?
     
     init(timer: Timer? = nil, view: ModulationViewController) {
         self.view = view
         self.timer = timer
-        self.humans = (0..<configHelper.config.groupSize).map { Human(isSick: false, index: $0) }
+        self.people = (0..<configHelper.config.groupSize).map { Human(isSick: false, index: $0) }
     }
     
     func viewDidLoad() {
@@ -30,7 +31,7 @@ final class ModulationPresenter {
     
     func didTapHuman(at index: Int) {
         let indexPaths = [index].map {
-            humans[$0].infect()
+            infectHumanByIndex(index)
             return IndexPath(item: $0, section: 0)
         }
         startTimer()
@@ -39,18 +40,33 @@ final class ModulationPresenter {
         }
     }
     
-    func getHumans() -> [Human] {
-        humans
+    func getPeople() -> [Human] {
+        people
     }
     
-    private func generateHumans(count: Int) -> [Human] {
-        let humans = (0..<configHelper.config.groupSize).map { Human(isSick: false, index: $0) }
-        return humans
+    func getHealthyPeople() -> Int {
+        people.count - infectedPeople.count
+    }
+    
+    func getInfectedPeopleCount() -> Int {
+        infectedPeople.count
+    }
+    
+    func infectHumanByIndex(_ index: Int) {
+        people[index].infect()
+        self.infectedPeople.append(Human(isSick: true, index: index))
+    }
+    
+    private func generatePeople(count: Int) -> [Human] {
+        let people = (0..<configHelper.config.groupSize).map { Human(isSick: false, index: $0) }
+        return people
     }
     
     private func startTimer() {
         if timer == nil {
             print("TIMER STARTED")
+//            infectedPeople = []
+            print(infectedPeople.count)
             timer = Timer.scheduledTimer(
                 timeInterval: Double(configHelper.config.refrashRate),
                 target: self,
@@ -69,18 +85,15 @@ final class ModulationPresenter {
     
     @objc private func calculate() {
         DispatchQueue.global().async {
-            //берем всех здоровых людей
-            let allHealthyPeople = self.humans.filter{ !$0.isSick } //too hard i think
-            //если здоровых нет - моделяция завершена. Останавливаем таймер
-            if allHealthyPeople.isEmpty {
+            //если все больны - моделяция завершена. Останавливаем таймер
+            if self.infectedPeople.count == self.people.count {
                 self.stopTimer()
                 return
             }
-            //берем всех инфицированных
-            let allInfectedPeople = self.humans.filter{ $0.isSick }
             //создаем множество индексов для будушего обновления. Обновляем только здоровых людей и только уникальные записи
             var peopleIndexesToUpdate = Set<Int>()
-            for infectedHuman in allInfectedPeople {
+            //берем всех инфицированных
+            for infectedHuman in self.infectedPeople {
                 //для каждого инфицированного, мы находим людей кто вокруг
                 let peopleNearby = self.getPeopleNearby(around: infectedHuman)
                 //решаем, какое количество человек из этого круга будет заражено
@@ -98,7 +111,7 @@ final class ModulationPresenter {
             //берем полученный список уникальных "везунчиков"
             let indexPaths = peopleIndexesToUpdate.map {
                 //заражаем человека
-                self.humans[$0].infect()
+                self.infectHumanByIndex($0)
                 //возвращаем индекс для обновления элемента коллекции
                 return IndexPath(item: $0, section: 0)
             }
@@ -128,6 +141,6 @@ final class ModulationPresenter {
             peopleAroundIndexes.append(index - 1 - peopleInRow) //top-left
             peopleAroundIndexes.append(index - 1 + peopleInRow) //bottom-left
         }
-        return peopleAroundIndexes.compactMap { humans.indices.contains($0) ? humans[$0] : nil }
+        return peopleAroundIndexes.compactMap { people.indices.contains($0) ? people[$0] : nil }
     }
 }

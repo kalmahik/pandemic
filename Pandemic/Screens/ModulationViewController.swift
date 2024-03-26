@@ -10,7 +10,6 @@ import UIKit
 final class ModulationViewController: UIViewController {
     
     // MARK: - Public Properties
-    let configHelper = ConfigHelper.shared
     var presenter: ModulationPresenter?
     var columnCount: Int?
     var scale: CGFloat = 1
@@ -85,7 +84,8 @@ extension ModulationViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HumanViewCell.identifier, for: indexPath)
         let human = presenter?.getPeople()[indexPath.row]
         guard let humanCell = cell as? HumanViewCell, let human else { return UICollectionViewCell() }
-        humanCell.configCell(human, index: indexPath.row, size: Constants.humanSize * scale)
+        let imageName = human.isInfected ? "infected" : "healthy"
+        humanCell.configCell(imageName: imageName)
         return humanCell
     }
 }
@@ -123,7 +123,6 @@ extension ModulationViewController: UIGestureRecognizerDelegate {
             scale *= sender.scale
             sender.scale = 1.0
             collectionView.collectionViewLayout.invalidateLayout()
-            collectionView.reloadData()
         }
     }
     

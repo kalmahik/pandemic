@@ -8,10 +8,6 @@
 import Foundation
 
 struct Human {
-    private(set) var isSick: Bool
-    private(set) var index: Int
-    
-    mutating func infect() {
-        isSick = true
-    }
+    var isInfected: Bool
+    var index: Int
 }

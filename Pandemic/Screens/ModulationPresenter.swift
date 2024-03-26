@@ -25,7 +25,7 @@ final class ModulationPresenter {
     init(timer: Timer? = nil, view: ModulationViewController) {
         self.view = view
         self.timer = timer
-        self.people = (0..<configHelper.config.groupSize).map { Human(isSick: false, index: $0) }
+        self.people = (0..<configHelper.config.groupSize).map { Human(isInfected: false, index: $0) }
     }
     
     //MARK: - UIViewController
@@ -65,14 +65,18 @@ final class ModulationPresenter {
     }
     
     func infectHumanByIndex(_ index: Int) {
-        people[index].infect()
-        self.infectedPeople.append(Human(isSick: true, index: index))
+        people[index].isInfected = true
+        self.infectedPeople.append(Human(isInfected: true, index: index))
+    }
+    
+    func getHelper() -> ConfigHelper {
+        return ConfigHelper.shared
     }
     
     //MARK: - Private Methods
     
     private func generatePeople(count: Int) -> [Human] {
-        let people = (0..<configHelper.config.groupSize).map { Human(isSick: false, index: $0) }
+        let people = (0..<configHelper.config.groupSize).map { Human(isInfected: false, index: $0) }
         return people
     }
     
@@ -115,7 +119,7 @@ final class ModulationPresenter {
                 //заражаем каждого человека из списка выбранных людей
                 for randomHuman in randomPeopleNearby {
                     //если выбранный человек уже заражен, пропускаем его и переходим к следующему
-                    if randomHuman.isSick { continue }
+                    if randomHuman.isInfected { continue }
                     //добавляем человека в список для обновления
                     peopleIndexesToUpdate.insert(randomHuman.index)
                 }

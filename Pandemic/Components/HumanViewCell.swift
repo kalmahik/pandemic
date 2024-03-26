@@ -27,30 +27,30 @@ final class HumanViewCell: UICollectionViewCell {
     
     // MARK: - Public Methods
     
-    func configCell(_ human: Human, index: Int, size: CGFloat) {
-        humanTextLabel.font = UIFont.systemFont(ofSize: size, weight: .regular)
-        humanTextLabel.text = human.isSick ? "🤢" : "😀"
+    func configCell(imageName: String) {
+        humanImage.image = UIImage(named: imageName)
     }
     
     // MARK: - Private Methods
 
-    private lazy var humanTextLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
+    private lazy var humanImage: UIImageView = {
+        let image = UIImageView()
+        image.translatesAutoresizingMaskIntoConstraints = false
+        return image
     }()
 }
 
 extension HumanViewCell {
     private func setupViews() {
-        contentView.addSubview(humanTextLabel)
-        contentView.layer.borderWidth = 1
+        contentView.addSubview(humanImage)
     }
     
     private func applyConstraints() {
         NSLayoutConstraint.activate([
-            humanTextLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            humanTextLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor)
+            humanImage.leadingAnchor.constraint(equalTo: leadingAnchor),
+            humanImage.trailingAnchor.constraint(equalTo: trailingAnchor),
+            humanImage.topAnchor.constraint(equalTo: topAnchor),
+            humanImage.bottomAnchor.constraint(equalTo: bottomAnchor),
         ])
     }
 }

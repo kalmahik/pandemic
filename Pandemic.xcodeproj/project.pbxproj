@@ -51,6 +51,43 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		84217E112BB2860F00061AA3 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				84A8487C2BAE1C3700867F78 /* Human.swift */,
+				84BF97272BAE337E00490E25 /* Config.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		84217E122BB2862E00061AA3 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				84A8487A2BAE186C00867F78 /* HumanViewCell.swift */,
+				84217DF42BB0C5C200061AA3 /* InformationTable.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		84217E132BB2864F00061AA3 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				84217DF22BB0AC2500061AA3 /* Constants.swift */,
+				84BF972B2BAF63D400490E25 /* ConfigHelper.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		84217E142BB2867C00061AA3 /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				84A848782BAD685000867F78 /* ModulationViewController.swift */,
+				84A848682BAD526700867F78 /* SettingsViewController.swift */,
+				84BF97292BAF336700490E25 /* ModulationPresenter.swift */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
 		84A848582BAD526700867F78 = {
 			isa = PBXGroup;
 			children = (
@@ -71,19 +108,14 @@
 			isa = PBXGroup;
 			children = (
 				84A848642BAD526700867F78 /* AppDelegate.swift */,
-				84A848662BAD526700867F78 /* SceneDelegate.swift */,
-				84A848682BAD526700867F78 /* SettingsViewController.swift */,
-				84A8487A2BAE186C00867F78 /* HumanViewCell.swift */,
-				84A8487C2BAE1C3700867F78 /* Human.swift */,
-				84BF97272BAE337E00490E25 /* Config.swift */,
-				84BF972B2BAF63D400490E25 /* ConfigHelper.swift */,
-				84217DF22BB0AC2500061AA3 /* Constants.swift */,
-				84A848782BAD685000867F78 /* ModulationViewController.swift */,
-				84BF97292BAF336700490E25 /* ModulationPresenter.swift */,
-				84217DF42BB0C5C200061AA3 /* InformationTable.swift */,
 				84A8486D2BAD526900867F78 /* Assets.xcassets */,
-				84A8486F2BAD526900867F78 /* LaunchScreen.storyboard */,
+				84217E122BB2862E00061AA3 /* Components */,
 				84A848722BAD526900867F78 /* Info.plist */,
+				84A8486F2BAD526900867F78 /* LaunchScreen.storyboard */,
+				84217E112BB2860F00061AA3 /* Model */,
+				84A848662BAD526700867F78 /* SceneDelegate.swift */,
+				84217E142BB2867C00061AA3 /* Screens */,
+				84217E132BB2864F00061AA3 /* Utils */,
 			);
 			path = Pandemic;
 			sourceTree = "<group>";

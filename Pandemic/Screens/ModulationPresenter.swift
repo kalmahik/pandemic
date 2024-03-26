@@ -8,11 +8,17 @@
 import Foundation
 
 final class ModulationPresenter {
+    
+    //MARK: - Public Properties
+    
+    weak var view: ModulationViewController?
+
+    //MARK: - Private Properties
+
     private var configHelper = ConfigHelper.shared
     private var people: [Human]
     private var infectedPeople: [Human] = []
     private var timer: Timer?
-    weak var view: ModulationViewController?
     
     //MARK: - Initializers
     
@@ -72,7 +78,6 @@ final class ModulationPresenter {
     
     private func startTimer() {
         if timer == nil {
-            print("TIMER STARTED")
             timer = Timer.scheduledTimer(
                 timeInterval: Double(configHelper.config.refrashRate),
                 target: self,
@@ -84,7 +89,6 @@ final class ModulationPresenter {
     }
     
     private func stopTimer() {
-        print("TIMER ENDED")
         timer?.invalidate()
         timer = nil
     }
@@ -96,7 +100,9 @@ final class ModulationPresenter {
                 self.stopTimer()
                 return
             }
-            //создаем множество индексов для будушего обновления. Обновляем только здоровых людей и только уникальные записи
+            //создаем множество индексов для будушего обновления. Обновляем только здоровых людей
+            //т к один и тот же человек может принадлежать разному кругу общения, то избегаем дублирования
+            //с помощью Set, тут останутся только уникальные люди
             var peopleIndexesToUpdate = Set<Int>()
             //берем всех инфицированных
             for infectedHuman in self.infectedPeople {
@@ -121,7 +127,7 @@ final class ModulationPresenter {
                 //возвращаем индекс для обновления элемента коллекции
                 return IndexPath(item: $0, section: 0)
             }
-            //в главном потоке обноваляю юай
+            //в главном потоке обновляем юай
             DispatchQueue.main.async {
                 self.view?.updateUI(indexPaths: indexPaths)
             }
@@ -131,7 +137,9 @@ final class ModulationPresenter {
     private func getPeopleNearby(around human: Human) -> [Human] {
         let peopleInRow = self.view?.columnCount ?? 10
         let index = human.index
-        let isLeftEdgeHuman = index % (peopleInRow) == 0
+        //челокек расположен в крайней левой ячейке (левее никого нет)
+        let isLeftEdgeHuman = index % peopleInRow == 0
+        //челокек расположен в крайней правой ячейке (правее никого нет)
         let isRightEdgeHuman = (index + 1) % peopleInRow == 0
         var peopleAroundIndexes = [
             index + peopleInRow, //bottom
@@ -147,6 +155,7 @@ final class ModulationPresenter {
             peopleAroundIndexes.append(index - 1 - peopleInRow) //top-left
             peopleAroundIndexes.append(index - 1 + peopleInRow) //bottom-left
         }
+        //если вышли за границы массива - то пропускаем эти ячейки
         return peopleAroundIndexes.compactMap { people.indices.contains($0) ? people[$0] : nil }
     }
 }

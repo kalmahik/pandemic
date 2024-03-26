@@ -28,7 +28,7 @@ final class SettingsViewController: UIViewController {
     
     private let groupSizeLabel: UILabel = {
         let label = UILabel()
-        label.text = TextConstants.groupSizeTitle
+        label.text = LocalizedStrings.groupSizeTitle
         return label
     }()
     
@@ -36,14 +36,14 @@ final class SettingsViewController: UIViewController {
         let textField = UITextField()
         textField.borderStyle = .roundedRect
         textField.keyboardType = .numberPad
-        textField.placeholder = TextConstants.groupSizeMessage
+        textField.placeholder = LocalizedStrings.groupSizeMessage
         textField.text = "\(configHelper.config.groupSize)"
         return textField
     }()
     
     private let infectionFactorLabel: UILabel = {
         let label = UILabel()
-        label.text = TextConstants.infectionFactorTitle
+        label.text = LocalizedStrings.infectionFactorTitle
         return label
     }()
     
@@ -51,14 +51,14 @@ final class SettingsViewController: UIViewController {
         let textField = UITextField()
         textField.borderStyle = .roundedRect
         textField.keyboardType = .numberPad
-        textField.placeholder = TextConstants.infectionFactorMessage
+        textField.placeholder = LocalizedStrings.infectionFactorMessage
         textField.text = "\(configHelper.config.infectionFactor)"
         return textField
     }()
     
     private let refreshRateLabel: UILabel = {
         let label = UILabel()
-        label.text = TextConstants.refrashRateTitle
+        label.text = LocalizedStrings.refrashRateTitle
         return label
     }()
     
@@ -66,7 +66,7 @@ final class SettingsViewController: UIViewController {
         let textField = UITextField()
         textField.borderStyle = .roundedRect
         textField.keyboardType = .numberPad
-        textField.placeholder = TextConstants.refrashRateMessage
+        textField.placeholder = LocalizedStrings.refrashRateMessage
         textField.text = "\(configHelper.config.refrashRate)"
         return textField
     }()
@@ -74,24 +74,30 @@ final class SettingsViewController: UIViewController {
     private lazy var runButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = .red
-        button.setTitle(TextConstants.runModulationButton, for: .normal)
+        button.setTitle(LocalizedStrings.runModulationButton, for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.addTarget(self, action: #selector(didTapRunButton), for: .touchUpInside)
         return button
     }()
     
     @objc private func didTapRunButton() {
-        configHelper.updateConfig(config: getConfig())
-        let modulationViewController = ModulationViewController()
-        navigationController?.pushViewController(modulationViewController, animated: true)
-    }
-    
-    private func getConfig() -> Config {
-        return Config(
+        configHelper.makeConfig(
             groupSize: groupSizeTextField.text,
             infectionFactor: infectionFactorTextField.text,
             refrashRate: refreshRateTextField.text
         )
+        let modulationViewController = ModulationViewController()
+        navigationController?.pushViewController(modulationViewController, animated: true)
+    }
+    
+    private enum LocalizedStrings {
+        static let groupSizeTitle = "Group Size"
+        static let groupSizeMessage = "Amount of population, more than 1"
+        static let infectionFactorTitle = "Infection Factor"
+        static let infectionFactorMessage = "From 1 to 8"
+        static let refrashRateTitle = "Refresh Rate"
+        static let refrashRateMessage = "In seconds, more than 1"
+        static let runModulationButton = "Запустить моделирование"
     }
 }
 

@@ -7,18 +7,20 @@
 
 import Foundation
 
-final class ModulationPresenter {
+final class ModulationPresenter: ModulationPresenterProtocol {
     
     //MARK: - Public Properties
     
-    weak var view: ModulationViewController?
+    weak var view: ModulationViewControllerProtocol?
 
     //MARK: - Private Properties
 
     private var configHelper = ConfigHelper.shared
-    private var people: [Human]
-    private var infectedPeople: [Human] = []
-    private var timer: Timer?
+    internal var people: [Human]
+    internal var infectedPeople: [Human] = []
+    internal var timer: Timer?
+    internal var columnCount: Int = 1
+    internal var scale: CGFloat = 1
     
     //MARK: - Initializers
     
@@ -52,25 +54,27 @@ final class ModulationPresenter {
         }
     }
     
-    func getPeople() -> [Human] {
-        people
-    }
+    func getPeople() -> [Human] { people }
     
-    func getHealthyPeopleCount() -> Int {
-        people.count - infectedPeople.count
-    }
+    func getHealthyPeopleCount() -> Int { people.count - infectedPeople.count }
     
-    func getInfectedPeopleCount() -> Int {
-        infectedPeople.count
-    }
+    func getInfectedPeopleCount() -> Int { infectedPeople.count }
     
     func infectHumanByIndex(_ index: Int) {
         people[index].isInfected = true
         self.infectedPeople.append(Human(isInfected: true, index: index))
     }
     
-    func getHelper() -> ConfigHelper {
-        return ConfigHelper.shared
+    func getHelper() -> ConfigHelper { ConfigHelper.shared }
+    
+    func getScale() -> CGFloat { scale }
+    
+    func setScale(_ scale: CGFloat) {
+        self.scale *= scale
+    }
+    
+    func setColumnCount(_ columnCount: Int) {
+        self.columnCount = max(columnCount, 1)
     }
     
     //MARK: - Private Methods
@@ -139,7 +143,7 @@ final class ModulationPresenter {
     }
 
     private func getPeopleNearby(around human: Human) -> [Human] {
-        let peopleInRow = self.view?.columnCount ?? 10
+        let peopleInRow = columnCount
         let index = human.index
         //челокек расположен в крайней левой ячейке (левее никого нет)
         let isLeftEdgeHuman = index % peopleInRow == 0

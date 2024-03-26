@@ -7,12 +7,11 @@
 
 import UIKit
 
-final class ModulationViewController: UIViewController {
+final class ModulationViewController: UIViewController, ModulationViewControllerProtocol {
     
     // MARK: - Public Properties
-    var presenter: ModulationPresenter?
-    var columnCount: Int?
-    var scale: CGFloat = 1
+    
+    var presenter: ModulationPresenterProtocol?
     
     // MARK: - Init
     
@@ -69,11 +68,15 @@ final class ModulationViewController: UIViewController {
     }()
 }
 
+// MARK: - UICollectionViewDelegate
+
 extension ModulationViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         presenter?.didTapHuman(at: indexPath.row)
     }
 }
+
+// MARK: - UICollectionViewDataSource
 
 extension ModulationViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -90,6 +93,8 @@ extension ModulationViewController: UICollectionViewDataSource {
     }
 }
 
+// MARK: - UICollectionViewDelegateFlowLayout
+
 extension ModulationViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(
         _ collectionView: UICollectionView,
@@ -97,9 +102,9 @@ extension ModulationViewController: UICollectionViewDelegateFlowLayout {
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
         let collectionViewWidth = collectionView.frame.width
-        let numberOfColumns = Int(collectionViewWidth / (Constants.humanSize * scale))
+        let numberOfColumns = Int(collectionViewWidth / (Constants.humanSize * (presenter?.getScale() ?? 1)))
         let itemWidth = collectionViewWidth / CGFloat(numberOfColumns)
-        columnCount = numberOfColumns
+        presenter?.setColumnCount(numberOfColumns)
         return CGSize(width: itemWidth, height: itemWidth)
     }
     
@@ -116,11 +121,13 @@ extension ModulationViewController: UICollectionViewDelegateFlowLayout {
     ) -> CGFloat { return 0 }
 }
 
+// MARK: - UIGestureRecognizerDelegate
+
 extension ModulationViewController: UIGestureRecognizerDelegate {
     @objc func handlePinch(_ sender: UIPinchGestureRecognizer) {
         guard sender.view != nil else { return }
         if sender.state == .began || sender.state == .changed {
-            scale *= sender.scale
+            presenter?.setScale(sender.scale)
             sender.scale = 1.0
             collectionView.collectionViewLayout.invalidateLayout()
         }

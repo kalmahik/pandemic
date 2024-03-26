@@ -10,7 +10,7 @@ import UIKit
 final class HumanViewCell: UICollectionViewCell {
     
     // MARK: - Constants
-
+    
     static let identifier = "HumanCollectionViewCell"
     
     // MARK: - Initializers

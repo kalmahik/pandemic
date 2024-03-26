@@ -26,6 +26,14 @@ final class SettingsViewController: UIViewController {
         return rootStack
     }()
     
+    private let iconLabel: UILabel = {
+        let label = UILabel()
+        label.text = "😷"
+        label.font = UIFont.systemFont(ofSize: 180)
+        label.textAlignment = .center
+        return label
+    }()    
+    
     private let groupSizeLabel: UILabel = {
         let label = UILabel()
         label.text = LocalizedStrings.groupSizeTitle
@@ -80,7 +88,7 @@ final class SettingsViewController: UIViewController {
         return button
     }()
     
-    @objc private func didTapRunButton() {
+    @objc internal func didTapRunButton() {
         configHelper.makeConfig(
             groupSize: groupSizeTextField.text,
             infectionFactor: infectionFactorTextField.text,
@@ -104,6 +112,7 @@ final class SettingsViewController: UIViewController {
 extension SettingsViewController {
     private func addSubViews() {
         [
+            iconLabel,
             groupSizeLabel,
             groupSizeTextField,
             infectionFactorLabel,
@@ -125,7 +134,10 @@ extension SettingsViewController {
             rootStack.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             rootStack.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
             rootStack.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 32),
-            
+                        
+            iconLabel.leadingAnchor.constraint(equalTo: rootStack.leadingAnchor),
+            iconLabel.trailingAnchor.constraint(equalTo: rootStack.trailingAnchor),
+             
             groupSizeTextField.leadingAnchor.constraint(equalTo: rootStack.leadingAnchor),
             groupSizeTextField.trailingAnchor.constraint(equalTo: rootStack.trailingAnchor),
             

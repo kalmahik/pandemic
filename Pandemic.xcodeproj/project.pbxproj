@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		84217DF32BB0AC2500061AA3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84217DF22BB0AC2500061AA3 /* Constants.swift */; };
 		84217DF52BB0C5C200061AA3 /* InformationTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84217DF42BB0C5C200061AA3 /* InformationTable.swift */; };
+		8438F0212BB3754C003BEA97 /* ModulationPresenterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8438F0202BB3754C003BEA97 /* ModulationPresenterProtocol.swift */; };
+		8438F0252BB37724003BEA97 /* ModulationViewControllerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8438F0242BB37724003BEA97 /* ModulationViewControllerProtocol.swift */; };
 		84A848652BAD526700867F78 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A848642BAD526700867F78 /* AppDelegate.swift */; };
 		84A848672BAD526700867F78 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A848662BAD526700867F78 /* SceneDelegate.swift */; };
 		84A848692BAD526700867F78 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A848682BAD526700867F78 /* SettingsViewController.swift */; };
@@ -25,6 +27,8 @@
 /* Begin PBXFileReference section */
 		84217DF22BB0AC2500061AA3 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		84217DF42BB0C5C200061AA3 /* InformationTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationTable.swift; sourceTree = "<group>"; };
+		8438F0202BB3754C003BEA97 /* ModulationPresenterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModulationPresenterProtocol.swift; sourceTree = "<group>"; };
+		8438F0242BB37724003BEA97 /* ModulationViewControllerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModulationViewControllerProtocol.swift; sourceTree = "<group>"; };
 		84A848612BAD526700867F78 /* Pandemic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pandemic.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84A848642BAD526700867F78 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		84A848662BAD526700867F78 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -84,6 +88,8 @@
 				84A848782BAD685000867F78 /* ModulationViewController.swift */,
 				84A848682BAD526700867F78 /* SettingsViewController.swift */,
 				84BF97292BAF336700490E25 /* ModulationPresenter.swift */,
+				8438F0202BB3754C003BEA97 /* ModulationPresenterProtocol.swift */,
+				8438F0242BB37724003BEA97 /* ModulationViewControllerProtocol.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -192,6 +198,8 @@
 			files = (
 				84BF972A2BAF336700490E25 /* ModulationPresenter.swift in Sources */,
 				84217DF32BB0AC2500061AA3 /* Constants.swift in Sources */,
+				8438F0212BB3754C003BEA97 /* ModulationPresenterProtocol.swift in Sources */,
+				8438F0252BB37724003BEA97 /* ModulationViewControllerProtocol.swift in Sources */,
 				84A848792BAD685000867F78 /* ModulationViewController.swift in Sources */,
 				84A8487D2BAE1C3700867F78 /* Human.swift in Sources */,
 				84A8487B2BAE186C00867F78 /* HumanViewCell.swift in Sources */,

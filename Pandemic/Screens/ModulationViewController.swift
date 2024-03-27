@@ -50,8 +50,8 @@ final class ModulationViewController: UIViewController, ModulationViewController
     
     // MARK: - Private Methods
     
-    private lazy var header: InformationTable = {
-        let header = InformationTable(
+    private lazy var header: InformationStatView = {
+        let header = InformationStatView(
             healthyCount: presenter?.getHealthyPeopleCount(),
             infectedCount: presenter?.getInfectedPeopleCount()
         )
@@ -151,12 +151,12 @@ extension ModulationViewController {
     func applyConstraints() {
         NSLayoutConstraint.activate([
             header.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            header.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            header.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            header.heightAnchor.constraint(equalToConstant: 48),
+            header.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            header.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            header.heightAnchor.constraint(equalToConstant: 72),
             collectionView.topAnchor.constraint(equalTo: header.bottomAnchor),
-            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
     }

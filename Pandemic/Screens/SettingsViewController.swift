@@ -15,6 +15,11 @@ final class SettingsViewController: UIViewController {
         super.viewDidLoad()
         addSubViews()
         applyConstraints()
+        registerForKeyboardNotifications()
+    }
+    
+    deinit {
+        unregisterForKeyboardNotifications()
     }
     
     private let rootScroll: UIScrollView = {
@@ -37,7 +42,7 @@ final class SettingsViewController: UIViewController {
         label.font = UIFont.systemFont(ofSize: 180)
         label.textAlignment = .center
         return label
-    }()    
+    }()
     
     private let groupSizeLabel: UILabel = {
         let label = UILabel()
@@ -116,6 +121,41 @@ final class SettingsViewController: UIViewController {
     }
 }
 
+// MARK: - Keyboard Handling
+extension SettingsViewController {
+    private func registerForKeyboardNotifications() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillShow(_:)),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillHide(_:)),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
+        )
+    }
+    
+    private func unregisterForKeyboardNotifications() {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    @objc private func keyboardWillShow(_ notification: Notification) {
+        guard let userInfo = notification.userInfo,
+        let keyboardFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else { return }
+        let contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardFrame.size.height + 48, right: 0)
+        rootScroll.contentInset = contentInset
+        rootScroll.scrollIndicatorInsets = contentInset
+    }
+    
+    @objc private func keyboardWillHide(_ notification: Notification) {
+        rootScroll.contentInset = .zero
+        rootScroll.scrollIndicatorInsets = .zero
+    }
+}
+
 extension SettingsViewController {
     private func addSubViews() {
         [
@@ -132,19 +172,28 @@ extension SettingsViewController {
             rootStack.addArrangedSubview($0)
         }
         rootStack.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(rootStack)
+        rootScroll.translatesAutoresizingMaskIntoConstraints = false
+        rootScroll.addSubview(rootStack)
+        view.addSubview(rootScroll)
         view.backgroundColor = .white
     }
     
     private func applyConstraints() {
         NSLayoutConstraint.activate([
-            rootStack.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            rootStack.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
-            rootStack.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
-                        
+            rootScroll.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            rootScroll.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            rootScroll.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            rootScroll.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            
+            rootStack.leadingAnchor.constraint(equalTo: rootScroll.contentLayoutGuide.leadingAnchor, constant: 16),
+            rootStack.trailingAnchor.constraint(equalTo: rootScroll.contentLayoutGuide.trailingAnchor, constant: -16),
+            rootStack.topAnchor.constraint(equalTo: rootScroll.contentLayoutGuide.topAnchor, constant: 16),
+            rootStack.bottomAnchor.constraint(equalTo: rootScroll.contentLayoutGuide.bottomAnchor, constant: -16),
+            rootStack.widthAnchor.constraint(equalTo: rootScroll.frameLayoutGuide.widthAnchor, constant: -32),
+            
             iconLabel.leadingAnchor.constraint(equalTo: rootStack.leadingAnchor),
             iconLabel.trailingAnchor.constraint(equalTo: rootStack.trailingAnchor),
-             
+            
             groupSizeTextField.leadingAnchor.constraint(equalTo: rootStack.leadingAnchor),
             groupSizeTextField.trailingAnchor.constraint(equalTo: rootStack.trailingAnchor),
             
@@ -156,8 +205,7 @@ extension SettingsViewController {
             
             runButton.leadingAnchor.constraint(equalTo: rootStack.leadingAnchor),
             runButton.trailingAnchor.constraint(equalTo: rootStack.trailingAnchor),
-            runButton.heightAnchor.constraint(equalToConstant: 48)
+            runButton.heightAnchor.constraint(equalToConstant: 48),
         ])
     }
 }
-

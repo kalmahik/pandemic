@@ -67,7 +67,7 @@ final class ModulationPresenter: ModulationPresenterProtocol {
     
     func getCellWidth() -> CGFloat {
         let collectionViewWidth = view?.getCollectionWidth() ?? 1
-        let numberOfColumns = Int(sqrt(CGFloat(people.count)) / scale )
+        let numberOfColumns = min(Int(sqrt(CGFloat(people.count)) / scale ), 50)
         let itemWidth = min(collectionViewWidth / CGFloat(numberOfColumns), collectionViewWidth)
         self.columnCount = numberOfColumns
         return itemWidth

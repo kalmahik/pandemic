@@ -123,22 +123,20 @@ final class ModulationPresenter: ModulationPresenterProtocol {
                 //решаем, какое количество человек из этого круга будет заражено
                 let amountPeopleIsUnderRisk = Int.random(in: 1...self.configHelper.config.infectionFactor)
                 //берем это количество случайных людей
-                let randomPeopleNearby = Array(peopleNearby.shuffled().prefix(amountPeopleIsUnderRisk))
+                let randomPeopleNearby = peopleNearby.shuffled().prefix(amountPeopleIsUnderRisk)
                 //заражаем каждого человека из списка выбранных людей
                 for randomHuman in randomPeopleNearby {
                     //если выбранный человек уже заражен, пропускаем его и переходим к следующему
                     if randomHuman.isInfected { continue }
                     //добавляем человека в список для обновления
                     peopleIndexesToUpdate.insert(randomHuman.index)
+                    //заражаем человека
+                    self.infectHumanByIndex(randomHuman.index)
                 }
             }
             //берем полученный список уникальных "везунчиков"
-            let indexPaths = peopleIndexesToUpdate.map {
-                //заражаем человека
-                self.infectHumanByIndex($0)
-                //возвращаем индекс для обновления элемента коллекции
-                return IndexPath(item: $0, section: 0)
-            }
+            //возвращаем индекс для обновления элемента коллекции
+            let indexPaths = peopleIndexesToUpdate.map { IndexPath(item: $0, section: 0) }
             //в главном потоке обновляем юай
             DispatchQueue.main.async {
                 self.view?.updateUI(indexPaths: indexPaths)

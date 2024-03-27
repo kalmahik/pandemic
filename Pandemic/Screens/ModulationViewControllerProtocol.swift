@@ -15,4 +15,5 @@ protocol ModulationViewControllerProtocol: AnyObject {
     func updateUI(indexPaths: [IndexPath])
     func addSubViews()
     func applyConstraints()
+    func getCollectionWidth() -> CGFloat
 }

@@ -17,6 +17,11 @@ final class SettingsViewController: UIViewController {
         applyConstraints()
     }
     
+    private let rootScroll: UIScrollView = {
+        let scrollview = UIScrollView()
+        return scrollview
+    }()
+    
     private let rootStack: UIStackView =  {
         let rootStack: UIStackView = UIStackView()
         rootStack.axis = NSLayoutConstraint.Axis.vertical
@@ -81,10 +86,12 @@ final class SettingsViewController: UIViewController {
     
     private lazy var runButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = .red
+        button.backgroundColor = .black
         button.setTitle(LocalizedStrings.runModulationButton, for: .normal)
-        button.setTitleColor(.black, for: .normal)
+        button.setTitleColor(.white, for: .normal)
         button.addTarget(self, action: #selector(didTapRunButton), for: .touchUpInside)
+        button.layer.cornerRadius = 16
+        button.layer.masksToBounds = true
         return button
     }()
     
@@ -133,7 +140,7 @@ extension SettingsViewController {
         NSLayoutConstraint.activate([
             rootStack.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             rootStack.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
-            rootStack.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 32),
+            rootStack.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
                         
             iconLabel.leadingAnchor.constraint(equalTo: rootStack.leadingAnchor),
             iconLabel.trailingAnchor.constraint(equalTo: rootStack.trailingAnchor),

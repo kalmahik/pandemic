@@ -46,6 +46,8 @@ final class ModulationViewController: UIViewController, ModulationViewController
         header.updateCount(presenter?.getHealthyPeopleCount(), presenter?.getInfectedPeopleCount())
     }
     
+    func getCollectionWidth() -> CGFloat { collectionView.frame.width }
+    
     // MARK: - Private Methods
     
     private lazy var header: InformationTable = {
@@ -101,11 +103,9 @@ extension ModulationViewController: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
-        let collectionViewWidth = collectionView.frame.width
-        let numberOfColumns = Int(collectionViewWidth / (Constants.humanSize * (presenter?.getScale() ?? 1)))
-        let itemWidth = collectionViewWidth / CGFloat(numberOfColumns)
-        presenter?.setColumnCount(numberOfColumns)
-        return CGSize(width: itemWidth, height: itemWidth)
+        guard let presenter else { return CGSize() }
+        let size = presenter.getCellWidth()
+        return CGSize(width: size, height: size)
     }
     
     func collectionView(

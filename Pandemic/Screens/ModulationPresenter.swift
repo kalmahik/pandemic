@@ -65,16 +65,20 @@ final class ModulationPresenter: ModulationPresenterProtocol {
         self.infectedPeople.append(Human(isInfected: true, index: index))
     }
     
+    func getCellWidth() -> CGFloat {
+        let collectionViewWidth = view?.getCollectionWidth() ?? 1
+        let numberOfColumns = Int(sqrt(CGFloat(people.count)) / scale )
+        let itemWidth = collectionViewWidth / CGFloat(numberOfColumns)
+        self.columnCount = numberOfColumns
+        return itemWidth
+    }
+    
     func getHelper() -> ConfigHelper { ConfigHelper.shared }
     
     func getScale() -> CGFloat { scale }
     
     func setScale(_ scale: CGFloat) {
         self.scale *= scale
-    }
-    
-    func setColumnCount(_ columnCount: Int) {
-        self.columnCount = max(columnCount, 1)
     }
     
     //MARK: - Private Methods

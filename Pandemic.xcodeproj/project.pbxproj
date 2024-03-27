@@ -85,11 +85,11 @@
 		84217E142BB2867C00061AA3 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
-				84A848782BAD685000867F78 /* ModulationViewController.swift */,
-				84A848682BAD526700867F78 /* SettingsViewController.swift */,
 				84BF97292BAF336700490E25 /* ModulationPresenter.swift */,
 				8438F0202BB3754C003BEA97 /* ModulationPresenterProtocol.swift */,
+				84A848782BAD685000867F78 /* ModulationViewController.swift */,
 				8438F0242BB37724003BEA97 /* ModulationViewControllerProtocol.swift */,
+				84A848682BAD526700867F78 /* SettingsViewController.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";

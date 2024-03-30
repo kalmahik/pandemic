@@ -97,6 +97,7 @@ final class ModulationPresenter: ModulationPresenterProtocol {
                 userInfo: nil,
                 repeats: true
             )
+            RunLoop.main.add(timer!, forMode: .common)
         }
     }
     

@@ -107,7 +107,7 @@ final class ModulationPresenter: ModulationPresenterProtocol {
     }
     
     @objc private func calculate() {
-        DispatchQueue.global().async {
+        DispatchQueue.global(qos: .userInitiated).async {
             //если все больны - моделяция завершена. Останавливаем таймер
             if self.infectedPeople.count == self.people.count {
                 self.stopTimer()
